@@ -572,7 +572,7 @@ public class AudioService extends MediaBrowserServiceCompat {
         final NotificationCompat.DecoratedCustomViewStyle style = new NotificationCompat.DecoratedCustomViewStyle();
 //        builder.setStyle(style);
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notify);
-//        builder.setCustomContentView(remoteViews);
+        builder.setCustomContentView(remoteViews);
 //        builder.setContent(remoteViews);
 //        builder.setCustomHeadsUpContentView(remoteViews);
 //        builder.setAllowSystemGeneratedContextualActions(false);
