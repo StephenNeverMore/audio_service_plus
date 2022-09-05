@@ -575,13 +575,10 @@ public class AudioService extends MediaBrowserServiceCompat {
         if (artBitmap != null) {
             remoteViews.setImageViewBitmap(R.id.image, artBitmap);
         }
-        remoteViews.setOnClickPendingIntent(R.id.stop,
-                buildMediaButtonPendingIntent(PlaybackStateCompat.ACTION_STOP));
-        remoteViews.setImageViewResource(R.id.media,
+        remoteViews.setImageViewResource(R.id.action,
                 isPlaying() ? R.drawable.pause : R.drawable.play);
         remoteViews.setOnClickPendingIntent(R.id.media, buildMediaButtonPendingIntent(
                 isPlaying() ? PlaybackStateCompat.ACTION_PAUSE : PlaybackStateCompat.ACTION_PLAY));
-        remoteViews.setOnClickPendingIntent(R.id.close, buildDeletePendingIntent());
         if (config.androidNotificationClickStartsActivity) {
             builder.setContentIntent(mediaSession.getController().getSessionActivity());
         }
