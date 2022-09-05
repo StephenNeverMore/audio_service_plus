@@ -557,25 +557,10 @@ public class AudioService extends MediaBrowserServiceCompat {
             for (int i = 0; i < compactActionIndices.length; i++) compactActionIndices[i] = i;
         }
         NotificationCompat.Builder builder = getNotificationBuilder();
-//        if (mediaMetadata != null) {
-//            MediaDescriptionCompat description = mediaMetadata.getDescription();
-//            if (description.getTitle() != null)
-//                builder.setContentTitle(description.getTitle());
-//            if (description.getSubtitle() != null)
-//                builder.setContentText(description.getSubtitle());
-//            if (description.getDescription() != null)
-//                builder.setSubText(description.getDescription());
-//        synchronized (this) {
-//            if (artBitmap != null)
-//                builder.setLargeIcon(artBitmap);
-//        }
-        final NotificationCompat.DecoratedCustomViewStyle style = new NotificationCompat.DecoratedCustomViewStyle();
-//        builder.setStyle(style);
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notify);
         builder.setCustomContentView(remoteViews);
-//        builder.setContent(remoteViews);
-//        builder.setCustomHeadsUpContentView(remoteViews);
-//        builder.setAllowSystemGeneratedContextualActions(false);
+        builder.setCustomBigContentView(remoteViews);
+        builder.setAllowSystemGeneratedContextualActions(false);
         builder.setCustomBigContentView(remoteViews);
         builder.setCategory(NotificationCompat.CATEGORY_ALARM);
         if (mediaMetadata != null) {

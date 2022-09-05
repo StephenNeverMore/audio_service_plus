@@ -276,7 +276,7 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         updated |= [self updateNowPlayingField:MPMediaItemPropertyArtist value:mediaItem[@"artist"]];
         NSNumber *duration = mediaItem[@"duration"];
         if (duration == (id)[NSNull null]) duration = @(0);
-        updated |= [self updateNowPlayingField:MPMediaItemPropertyPlaybackDuration value:([NSNumber numberWithDouble: ([duration doubleValue] / 1000)])];
+//        updated |= [self updateNowPlayingField:MPMediaItemPropertyPlaybackDuration value:([NSNumber numberWithDouble: ([duration doubleValue] / 1000)])];
         if (@available(iOS 3.0, macOS 10.13.2, *)) {
             updated |= [self updateNowPlayingField:MPMediaItemPropertyArtwork value:artwork];
         }
@@ -355,42 +355,42 @@ static NSMutableDictionary *nowPlayingInfo = nil;
             }
             break;
         case ARewind:
-            if (rewindInterval.integerValue > 0) {
-                if (enable) {
-                    [commandCenter.skipBackwardCommand addTarget: self action:@selector(skipBackward:)];
-                    int rewindIntervalInSeconds = [rewindInterval intValue]/1000;
-                    NSNumber *rewindIntervalInSec = [NSNumber numberWithInt: rewindIntervalInSeconds];
-                    commandCenter.skipBackwardCommand.preferredIntervals = @[rewindIntervalInSec];
-                } else {
+//            if (rewindInterval.integerValue > 0) {
+//                if (enable) {
+//                   [commandCenter.skipBackwardCommand addTarget: self action:@selector(skipBackward:)];
+//                    int rewindIntervalInSeconds = [rewindInterval intValue]/1000;
+//                    NSNumber *rewindIntervalInSec = [NSNumber numberWithInt: rewindIntervalInSeconds];
+//                    commandCenter.skipBackwardCommand.preferredIntervals = @[rewindIntervalInSec];
+//                } else {
                     [commandCenter.skipBackwardCommand removeTarget:nil];
-                }
-            }
+//                }
+//            }
             break;
         case ASkipToPrevious:
-            if (enable) {
-                [commandCenter.previousTrackCommand addTarget:self action:@selector(previousTrack:)];
-            } else {
+//            if (enable) {
+//                [commandCenter.previousTrackCommand addTarget:self action:@selector(previousTrack:)];
+//            } else {
                 [commandCenter.previousTrackCommand removeTarget:nil];
-            }
+//            }
             break;
         case ASkipToNext:
-            if (enable) {
-                [commandCenter.nextTrackCommand addTarget:self action:@selector(nextTrack:)];
-            } else {
+//            if (enable) {
+//                [commandCenter.nextTrackCommand addTarget:self action:@selector(nextTrack:)];
+//           } else {
                 [commandCenter.nextTrackCommand removeTarget:nil];
-            }
+//            }
             break;
         case AFastForward:
-            if (fastForwardInterval.integerValue > 0) {
-                if (enable) {
-                    [commandCenter.skipForwardCommand addTarget: self action:@selector(skipForward:)];
-                    int fastForwardIntervalInSeconds = [fastForwardInterval intValue]/1000;
-                    NSNumber *fastForwardIntervalInSec = [NSNumber numberWithInt: fastForwardIntervalInSeconds];
-                    commandCenter.skipForwardCommand.preferredIntervals = @[fastForwardIntervalInSec];
-                } else {
+//            if (fastForwardInterval.integerValue > 0) {
+//                if (enable) {
+//                    [commandCenter.skipForwardCommand addTarget: self action:@selector(skipForward:)];
+//                    int fastForwardIntervalInSeconds = [fastForwardInterval intValue]/1000;
+//                    NSNumber *fastForwardIntervalInSec = [NSNumber numberWithInt: fastForwardIntervalInSeconds];
+//                    commandCenter.skipForwardCommand.preferredIntervals = @[fastForwardIntervalInSec];
+//                } else {
                     [commandCenter.skipForwardCommand removeTarget:nil];
-                }
-            }
+//                }
+//            }
             break;
         case ASetRating:
             // TODO:
@@ -399,52 +399,52 @@ static NSMutableDictionary *nowPlayingInfo = nil;
             // commandCenter.bookmarkCommand
             break;
         case ASeekTo:
-            if (@available(iOS 9.1, macOS 10.12.2, *)) {
-                if (enable) {
-                    [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changePlaybackPosition:)];
-                } else {
+//            if (@available(iOS 9.1, macOS 10.12.2, *)) {
+//                if (enable) {
+//                   [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changePlaybackPosition:)];
+//                } else {
                     [commandCenter.changePlaybackPositionCommand removeTarget:nil];
-                }
-            }
+//                }
+//            }
             break;
         case APlayPause:
             // Automatically enabled.
             break;
         case ASetRepeatMode:
-            if (enable) {
-                [commandCenter.changeRepeatModeCommand addTarget:self action:@selector(changeRepeatMode:)];
-            } else {
+//            if (enable) {
+//                [commandCenter.changeRepeatModeCommand addTarget:self action:@selector(changeRepeatMode:)];
+//            } else {
                 [commandCenter.changeRepeatModeCommand removeTarget:nil];
-            }
+//            }
             break;
         case ASetShuffleMode:
-            if (enable) {
-                [commandCenter.changeShuffleModeCommand addTarget:self action:@selector(changeShuffleMode:)];
-            } else {
+//            if (enable) {
+//                [commandCenter.changeShuffleModeCommand addTarget:self action:@selector(changeShuffleMode:)];
+//            } else {
                 [commandCenter.changeShuffleModeCommand removeTarget:nil];
-            }
+//            }
             break;
         case ASeekBackward:
-            if (enable) {
-                [commandCenter.seekBackwardCommand addTarget:self action:@selector(seekBackward:)];
-            } else {
+//            if (enable) {
+//               [commandCenter.seekBackwardCommand addTarget:self action:@selector(seekBackward:)];
+//            } else {
                 [commandCenter.seekBackwardCommand removeTarget:nil];
-            }
+//            }
             break;
         case ASeekForward:
-            if (enable) {
-                [commandCenter.seekForwardCommand addTarget:self action:@selector(seekForward:)];
-            } else {
+//            if (enable) {
+//                [commandCenter.seekForwardCommand addTarget:self action:@selector(seekForward:)];
+//            } else {
                 [commandCenter.seekForwardCommand removeTarget:nil];
-            }
+//            }
             break;
         case ASetSpeed:
-            if (enable) {
+//            if (enable) {
 //                [commandCenter.changePlaybackRateCommand setSupportedPlaybackRates:@[@(1),@(1.5),@(2)]]
-                [commandCenter.changePlaybackRateCommand addTarget:self action:@selector(changePlaybackRate:)];
-            } else {
+//               [commandCenter.changePlaybackRateCommand addTarget:self action:@selector(changePlaybackRate:)];
+//            } else {
                 [commandCenter.changePlaybackRateCommand removeTarget:nil];
-            }
+//            }
             break;
         default:
             break;
