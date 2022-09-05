@@ -7,27 +7,20 @@ import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-
-import androidx.annotation.UiThread;
-import androidx.core.app.NotificationCompat;
-
 import android.support.v4.media.MediaBrowserCompat;
-
-import androidx.media.MediaBrowserServiceCompat;
-
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.RatingCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -36,23 +29,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
 
+import androidx.annotation.UiThread;
+import androidx.media.MediaBrowserServiceCompat;
 import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.engine.FlutterEngineCache;
+import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.NewIntentListener;
-import io.flutter.plugin.common.BinaryMessenger;
-
-import io.flutter.embedding.engine.FlutterEngine;
-import io.flutter.embedding.engine.FlutterEngineCache;
-import io.flutter.embedding.engine.dart.DartExecutor;
-
-import android.net.Uri;
-import android.util.Log;
 
 /**
  * AudioservicePlugin
@@ -870,36 +861,16 @@ public class AudioServicePlusPlugin implements FlutterPlugin, ActivityAware {
                     break;
                 }
                 case "setState": {
-                    Log.e("SEE_THIS", "setState");
                     Map<?, ?> stateMap = (Map<?, ?>) args.get("state");
                     AudioProcessingState processingState = AudioProcessingState.values()[(Integer) stateMap.get(
                             "processingState")];
                     boolean playing = (Boolean) stateMap.get("playing");
                     @SuppressWarnings("unchecked") List<Map<?, ?>> rawControls = (List<Map<?, ?>>) stateMap.get(
                             "controls");
-                    if (rawControls != null && !rawControls.isEmpty()) {
-                        for (int i = 0; i < rawControls.size(); i++) {
-                            Object item = rawControls.get(i);
-                            Log.e("SEE_THIS", "rawControls " + item);
-                        }
-                    }
-
                     @SuppressWarnings("unchecked") List<Object> compactActionIndexList = (List<Object>) stateMap.get(
                             "androidCompactActionIndices");
-                    if (compactActionIndexList != null && !compactActionIndexList.isEmpty()) {
-                        for (int i = 0; i < compactActionIndexList.size(); i++) {
-                            Object item = compactActionIndexList.get(i);
-                            Log.e("SEE_THIS", "compactActionIndexList " + item);
-                        }
-                    }
                     @SuppressWarnings("unchecked") List<Integer> rawSystemActions = (List<Integer>) stateMap.get(
                             "systemActions");
-                    if (rawSystemActions != null && !rawSystemActions.isEmpty()) {
-                        for (int i = 0; i < rawSystemActions.size(); i++) {
-                            Object item = rawSystemActions.get(i);
-                            Log.e("SEE_THIS", "rawSystemActions " + item);
-                        }
-                    }
                     long position = getLong(stateMap.get("updatePosition"));
                     long bufferedPosition = getLong(stateMap.get("bufferedPosition"));
                     float speed = (float) ((double) ((Double) stateMap.get("speed")));

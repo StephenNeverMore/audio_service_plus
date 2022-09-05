@@ -565,6 +565,7 @@ public class AudioService extends MediaBrowserServiceCompat {
         builder.setCategory(NotificationCompat.CATEGORY_ALARM);
         if (mediaMetadata != null) {
             MediaDescriptionCompat description = mediaMetadata.getDescription();
+            Log.e("SEE_THIS", "description = " + description.toString());
             if (description.getTitle() != null) {
                 remoteViews.setTextViewText(R.id.title, description.getTitle());
             }
@@ -633,7 +634,6 @@ public class AudioService extends MediaBrowserServiceCompat {
     }
 
     private void updateNotification() {
-        Log.e("SEE_THIS", "updateNotification  notificationCreated = " + notificationCreated);
         if (notificationCreated) {
             getNotificationManager().notify(NOTIFICATION_ID, buildNotification());
         }
@@ -664,7 +664,6 @@ public class AudioService extends MediaBrowserServiceCompat {
     private void internalStartForeground() {
         startForeground(NOTIFICATION_ID, buildNotification());
         notificationCreated = true;
-        Log.e("SEE_THIS", "internalStartForeground");
     }
 
     private void acquireWakeLock() {
