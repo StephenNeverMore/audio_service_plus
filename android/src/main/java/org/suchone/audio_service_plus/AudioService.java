@@ -25,7 +25,6 @@ import android.support.v4.media.RatingCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 import android.util.LruCache;
 import android.util.Size;
 import android.view.KeyEvent;
@@ -565,7 +564,6 @@ public class AudioService extends MediaBrowserServiceCompat {
         builder.setCategory(NotificationCompat.CATEGORY_ALARM);
         if (mediaMetadata != null) {
             MediaDescriptionCompat description = mediaMetadata.getDescription();
-            Log.e("SEE_THIS", "description = " + description.toString());
             if (description.getTitle() != null) {
                 remoteViews.setTextViewText(R.id.title, description.getTitle());
             }

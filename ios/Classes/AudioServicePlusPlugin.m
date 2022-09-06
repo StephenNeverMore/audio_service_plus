@@ -196,6 +196,7 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         mediaItem = args[@"mediaItem"];
         NSString* artUri = mediaItem[@"artUri"];
         artwork = nil;
+        // TODO @levi 设置通知栏图片
         if (![artUri isEqual: [NSNull null]]) {
             NSString* artCacheFilePath = (NSString *)[NSNull null];
             NSDictionary* extras = mediaItem[@"extras"];
