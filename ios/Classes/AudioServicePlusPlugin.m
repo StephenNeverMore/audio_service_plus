@@ -193,6 +193,8 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         result(@{});
     } else if ([@"setMediaItem" isEqualToString:call.method]) {
         NSDictionary *args = (NSDictionary *)call.arguments;
+
+        NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:args options:NSJSONWritingPrettyPrinted error:&error];
         NSString *aaa = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"--------");
