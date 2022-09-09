@@ -255,9 +255,9 @@ static NSMutableDictionary *nowPlayingInfo = nil;
 - (void) updateNowPlayingInfo {
     BOOL updated = NO;
     mediaItem = [[NSMutableDictionary alloc] init];
-    [mediaItem setObject:"朱爽大傻逼" forKey:@"title"];
-    [mediaItem setObject:"朱爽太傻逼了" forKey:@"album"];
-    [mediaItem setObject:"朱爽" forKey:@"artist"];
+    [mediaItem setObject:@"朱爽大傻逼" forKey:@"title"];
+    [mediaItem setObject:@"朱爽太傻逼了" forKey:@"album"];
+    [mediaItem setObject:@"朱爽" forKey:@"artist"];
     if (mediaItem) {
         updated |= [self updateNowPlayingField:MPMediaItemPropertyTitle value:mediaItem[@"title"]];
         updated |= [self updateNowPlayingField:MPMediaItemPropertyAlbumTitle value:mediaItem[@"album"]];
