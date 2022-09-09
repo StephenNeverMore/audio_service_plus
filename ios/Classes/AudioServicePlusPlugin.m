@@ -196,8 +196,8 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageB64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
 #if TARGET_OS_IPHONE
         UIImage *artImage = [UIImage imageWithData:imageData];
-        artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage]
-#else
+        artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage];
+#else1
         NSImage *artImage = [NSImage imageWithData:imageData];
         artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:artImage.size requestHandler:^NSImage* _Nonnull(CGSize aSize) {
             return artImage;
