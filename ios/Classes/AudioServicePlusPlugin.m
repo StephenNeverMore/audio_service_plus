@@ -196,12 +196,9 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageB64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
 #if TARGET_OS_IPHONE
         UIImage *artImage = [UIImage imageWithData:imageData];
+        artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage]
 #else
         NSImage *artImage = [NSImage imageWithData:imageData];
-#endif
-#if TARGET_OS_IPHONE
-        artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage];
-#else
         artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:artImage.size requestHandler:^NSImage* _Nonnull(CGSize aSize) {
             return artImage;
         }];
@@ -261,19 +258,20 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         updated |= [self updateNowPlayingField:MPMediaItemPropertyTitle value:mediaItem[@"title"]];
         updated |= [self updateNowPlayingField:MPMediaItemPropertyAlbumTitle value:mediaItem[@"album"]];
         updated |= [self updateNowPlayingField:MPMediaItemPropertyArtist value:mediaItem[@"artist"]];
-        NSNumber *duration = mediaItem[@"duration"];
-        if (duration == (id)[NSNull null]) duration = @(0);
-//        updated |= [self updateNowPlayingField:MPMediaItemPropertyPlaybackDuration value:([NSNumber numberWithDouble: ([duration doubleValue] / 1000)])];
         if (@available(iOS 3.0, macOS 10.13.2, *)) {
             updated |= [self updateNowPlayingField:MPMediaItemPropertyArtwork value:artwork];
         }
+
+//        NSNumber *duration = mediaItem[@"duration"];
+//        if (duration == (id)[NSNull null]) duration = @(0);
+//        updated |= [self updateNowPlayingField:MPMediaItemPropertyPlaybackDuration value:([NSNumber numberWithDouble: ([duration doubleValue] / 1000)])];
     }
 
     if (@available(iOS 10.0, macOS 10.12.2, *)) {
         updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyMediaType value:@(MPNowPlayingInfoMediaTypeAudio)];
     }
-    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyPlaybackRate value:(playing ? speed : [NSNumber numberWithDouble: 0.0])];
-    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyElapsedPlaybackTime value:[NSNumber numberWithDouble:([position doubleValue] / 1000)]];
+//    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyPlaybackRate value:(playing ? speed : [NSNumber numberWithDouble: 0.0])];
+//    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyElapsedPlaybackTime value:[NSNumber numberWithDouble:([position doubleValue] / 1000)]];
     MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
     if (@available(iOS 13.0, macOS 10.12.2, *)) {
         center.playbackState = playing ? MPNowPlayingPlaybackStatePlaying : MPNowPlayingPlaybackStatePaused;
