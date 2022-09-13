@@ -196,6 +196,7 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         mediaItem = [[NSMutableDictionary alloc] initWithDictionary:args[@"mediaItem"]];
         NSString *path = [[NSBundle mainBundle] pathForResource:@"app_icon" ofType:@"png"];
         UIImage *artImage = [UIImage imageWithContentsOfFile:path];
+        artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage];
         [self updateNowPlayingInfo];
         result(@{});
     } else if ([@"setPlaybackInfo" isEqualToString:call.method]) {
