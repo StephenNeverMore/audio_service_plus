@@ -193,33 +193,10 @@ static NSMutableDictionary *nowPlayingInfo = nil;
         result(@{});
     } else if ([@"setMediaItem" isEqualToString:call.method]) {
         NSDictionary *args = (NSDictionary *)call.arguments;
-        mediaItem = args[@"mediaItem"];
-        NSString* artUri = mediaItem[@"artUri"];
-        artwork = nil;
-        // TODO @levi 设置通知栏图片
-        if (![artUri isEqual: [NSNull null]]) {
-            NSString* artCacheFilePath = (NSString *)[NSNull null];
-            NSDictionary* extras = mediaItem[@"extras"];
-            if (![extras isEqual: [NSNull null]]) {
-                artCacheFilePath = extras[@"artCacheFile"];
-            }
-            if (![artCacheFilePath isEqual: [NSNull null]]) {
-#if TARGET_OS_IPHONE
-                UIImage* artImage = [UIImage imageWithContentsOfFile:artCacheFilePath];
-#else
-                NSImage* artImage = [[NSImage alloc] initWithContentsOfFile:artCacheFilePath];
-#endif
-                if (artImage != nil) {
-#if TARGET_OS_IPHONE
-                    artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage];
-#else
-                    artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:artImage.size requestHandler:^NSImage* _Nonnull(CGSize aSize) {
-                        return artImage;
-                    }];
-#endif
-                }
-            }
-        }
+        mediaItem = [[NSMutableDictionary alloc] initWithDictionary:args[@"mediaItem"]];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"app_icon" ofType:@"png"];
+        UIImage *artImage = [UIImage imageWithContentsOfFile:path];
+        artwork = [[MPMediaItemArtwork alloc] initWithImage: artImage];
         [self updateNowPlayingInfo];
         result(@{});
     } else if ([@"setPlaybackInfo" isEqualToString:call.method]) {
@@ -274,20 +251,21 @@ static NSMutableDictionary *nowPlayingInfo = nil;
     if (mediaItem) {
         updated |= [self updateNowPlayingField:MPMediaItemPropertyTitle value:mediaItem[@"title"]];
         updated |= [self updateNowPlayingField:MPMediaItemPropertyAlbumTitle value:mediaItem[@"album"]];
-        updated |= [self updateNowPlayingField:MPMediaItemPropertyArtist value:mediaItem[@"artist"]];
-        NSNumber *duration = mediaItem[@"duration"];
-        if (duration == (id)[NSNull null]) duration = @(0);
-//        updated |= [self updateNowPlayingField:MPMediaItemPropertyPlaybackDuration value:([NSNumber numberWithDouble: ([duration doubleValue] / 1000)])];
+//        updated |= [self updateNowPlayingField:MPMediaItemPropertyArtist value:mediaItem[@"artist"]];
         if (@available(iOS 3.0, macOS 10.13.2, *)) {
             updated |= [self updateNowPlayingField:MPMediaItemPropertyArtwork value:artwork];
         }
+
+//        NSNumber *duration = mediaItem[@"duration"];
+//        if (duration == (id)[NSNull null]) duration = @(0);
+//        updated |= [self updateNowPlayingField:MPMediaItemPropertyPlaybackDuration value:([NSNumber numberWithDouble: ([duration doubleValue] / 1000)])];
     }
 
     if (@available(iOS 10.0, macOS 10.12.2, *)) {
         updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyMediaType value:@(MPNowPlayingInfoMediaTypeAudio)];
     }
-    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyPlaybackRate value:(playing ? speed : [NSNumber numberWithDouble: 0.0])];
-    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyElapsedPlaybackTime value:[NSNumber numberWithDouble:([position doubleValue] / 1000)]];
+//    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyPlaybackRate value:(playing ? speed : [NSNumber numberWithDouble: 0.0])];
+//    updated |= [self updateNowPlayingField:MPNowPlayingInfoPropertyElapsedPlaybackTime value:[NSNumber numberWithDouble:([position doubleValue] / 1000)]];
     MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
     if (@available(iOS 13.0, macOS 10.12.2, *)) {
         center.playbackState = playing ? MPNowPlayingPlaybackStatePlaying : MPNowPlayingPlaybackStatePaused;
