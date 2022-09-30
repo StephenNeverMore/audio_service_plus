@@ -566,9 +566,13 @@ public class AudioService extends MediaBrowserServiceCompat {
             MediaDescriptionCompat description = mediaMetadata.getDescription();
             if (description.getTitle() != null) {
                 remoteViews.setTextViewText(R.id.title, description.getTitle());
+            } else {
+                remoteViews.setTextViewText(R.id.title, "");
             }
             if (description.getDescription() != null) {
                 remoteViews.setTextViewText(R.id.subtitle, description.getDescription());
+            } else {
+                remoteViews.setTextViewText(R.id.subtitle, "");
             }
         }
         if (artBitmap != null) {

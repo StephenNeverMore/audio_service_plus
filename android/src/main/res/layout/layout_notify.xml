@@ -39,7 +39,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="分类分类"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 android:textStyle="bold" />
@@ -52,7 +52,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="音频名称名称音频名称名音频名称名称"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="12dp" />
 
