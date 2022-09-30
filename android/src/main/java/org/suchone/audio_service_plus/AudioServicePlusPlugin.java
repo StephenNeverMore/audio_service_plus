@@ -1116,7 +1116,7 @@ public class AudioServicePlusPlugin implements FlutterPlugin, ActivityAware {
         return AudioService.instance.createMediaMetadata((String) rawMediaItem.get("id"),
                 (String) rawMediaItem.get("title"), (String) rawMediaItem.get("album"),
                 (String) rawMediaItem.get("artist"), (String) rawMediaItem.get("genre"),
-                getLong(rawMediaItem.get("duration")), (String) rawMediaItem.get("artUri"),
+                getLong(-1), (String) rawMediaItem.get("artUri"),
                 (Boolean) rawMediaItem.get("playable"), (String) rawMediaItem.get("displayTitle"),
                 (String) rawMediaItem.get("displaySubtitle"),
                 (String) rawMediaItem.get("displayDescription"),
