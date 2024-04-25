@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -662,7 +663,12 @@ public class AudioService extends MediaBrowserServiceCompat {
     }
 
     private void internalStartForeground() {
-        startForeground(NOTIFICATION_ID, buildNotification());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID, buildNotification(),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
+        } else {
+            startForeground(NOTIFICATION_ID, buildNotification());
+        }
         notificationCreated = true;
     }
 
@@ -880,7 +886,8 @@ public class AudioService extends MediaBrowserServiceCompat {
         public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
             if (listener == null) return false;
             // TODO: use typesafe version once SDK 33 is released.
-            @SuppressWarnings("deprecation") final KeyEvent event = (KeyEvent) mediaButtonEvent.getExtras().getParcelable(
+            @SuppressWarnings("deprecation")
+            final KeyEvent event = (KeyEvent) mediaButtonEvent.getExtras().getParcelable(
                     Intent.EXTRA_KEY_EVENT);
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 switch (event.getKeyCode()) {
